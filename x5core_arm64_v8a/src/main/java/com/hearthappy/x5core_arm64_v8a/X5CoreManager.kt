@@ -6,7 +6,7 @@ import android.os.Build
 import android.util.Log
 import com.hearthappy.x5_arm64_v8a.interfaces.X5CoreListener
 import com.hearthappy.x5core_arm64_v8a.X5ProcessInitService
-import com.hearthappy.x5core_arm64_v8a.utils.IOUtils
+import com.hearthappy.x5core_arm64_v8a.utils.IOTools
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
 import com.tencent.smtt.sdk.TbsListener
@@ -19,9 +19,9 @@ object X5CoreManager {
     fun Context.initX5Arm64_v8a(isDownloadWithoutWifi:Boolean=true,coreMinVersion:Int=QbSdk.CORE_VER_ENABLE_202207,listener: X5CoreListener) {
 
         /* [new] 独立Web进程演示 */
-        if (!startX5WebProcessPreinitService()) {
+       /* if (!startX5WebProcessPreinitService()) {
             return
-        }
+        }*/
         loadX5Core(isDownloadWithoutWifi,coreMinVersion,listener)
     }
 
@@ -58,10 +58,10 @@ object X5CoreManager {
     }
 
     private fun Context.checkLocalTbs(listener: X5CoreListener) {
-        val path= applicationContext.cacheDir.absolutePath + "/tbs_core_046285_20240613152541_nolog_fs_obfs_arm64-v8a_release.tbs.apk"
+        val path= applicationContext.cacheDir.absolutePath + "/tbs_core_release.tbs.apk"
         val file = File(path)
         if(!file.exists()){
-            IOUtils.copyAssetsToSDCard(applicationContext, "tbs", cacheDir.absolutePath)
+            IOTools.copyAssetsToSDCard(applicationContext, "arm64_v8a", cacheDir.absolutePath)
             installLocalTbs(path,listener)
         }else installLocalTbs(path,listener)
     }

@@ -2,7 +2,6 @@ package com.hearthappy.webx5core
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -32,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, if (webView.getIsX5Core()) "X5内核: " + QbSdk.getTbsVersion(this@MainActivity) else "SDK系统内核", Toast.LENGTH_SHORT).show()
                 viewBinding.initWebView()
             }
+            btnLoadWebView.requestFocus()
 
         }
     }

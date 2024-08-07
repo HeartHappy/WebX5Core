@@ -1,14 +1,64 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
+group("com.hearthappy")
+version("1.0.0")
+// Notice: 2022/1/11 Android依赖发布函数库
+
+
+/**
+ * error:Cause: path may not be null or empty string. path=''
+ * solve：将所有java文件重构成kotlin文件，即可解决
+ */
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set("javadoc")
+    from javadoc.destinationDir
+}
+
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set("sources")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.hearthappy.webx5core_arm64_v8a'
+                artifactId = 'webx5core_arm64_v8a'
+                version = '1.0.0'
+                artifacts {
+                    archives(javadocJar)
+                    archives(sourceJar)
+                }
+            }
+            //添加如下代码，还会生成一个debug版的库
+            /*debug(MavenPublication){
+                from components.debug
+
+                groupId = 'com.hearthappy.ktorexpand'
+                artifactId = 'ktor-expand-debug'
+                version = '1.0.0'
+            }*/
+        }
+    }
 }
 
 android {
     namespace 'com.hearthappy.x5core_arm64_v8a'
-    compileSdk 34
+    compileSdk rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdk 24
+        minSdk rootProject.ext.android.minSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -27,15 +77,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
 }
 
 dependencies {
 
-    implementation libs.androidx.core.ktx
-    implementation libs.androidx.appcompat
-    implementation libs.material
-    testImplementation libs.junit
-    androidTestImplementation libs.androidx.junit
-    androidTestImplementation libs.androidx.espresso.core
-    implementation 'com.tencent.tbs:tbssdk:44286'
+    implementation rootProject.ext.dependencies.core_ktx
+    implementation rootProject.ext.dependencies.appcompat
+    implementation rootProject.ext.dependencies.material
+    testImplementation rootProject.ext.dependencies.junit
+    androidTestImplementation rootProject.ext.dependencies.test_junit
+    androidTestImplementation rootProject.ext.dependencies.espresso_core
+    implementation rootProject.ext.dependencies.tbssdk
 }

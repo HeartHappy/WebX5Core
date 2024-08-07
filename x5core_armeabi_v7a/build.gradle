@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
+group("com.hearthappy")
+version("1.0.0")
+// Notice: 2022/1/11 Android依赖发布函数库
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set("javadoc")
+    from javadoc.destinationDir
+}
+
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set("sources")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.hearthappy.webx5core_armeabi_v7a'
+                artifactId = 'webx5core_armeabi_v7a'
+                version = '1.0.0'
+                artifacts {
+                    archives(javadocJar)
+                    archives(sourceJar)
+                }
+            }
+            //添加如下代码，还会生成一个debug版的库
+            /*debug(MavenPublication){
+                from components.debug
+
+                groupId = 'com.hearthappy.ktorexpand'
+                artifactId = 'ktor-expand-debug'
+                version = '1.0.0'
+            }*/
+        }
+    }
+}
+
+android {
+    namespace 'com.hearthappy.x5core_armeabi_v7a'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation rootProject.ext.dependencies.core_ktx
+    implementation rootProject.ext.dependencies.appcompat
+    implementation rootProject.ext.dependencies.material
+    implementation rootProject.ext.dependencies.tbssdk
+//    testImplementation rootProject.ext.dependencies.junit
+//    androidTestImplementation rootProject.ext.dependencies.test_junit
+//    androidTestImplementation rootProject.ext.dependencies.espresso_core
+}
