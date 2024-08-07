@@ -50,10 +50,10 @@ afterEvaluate {
 
 android {
     namespace 'com.hearthappy.x5core_armeabi_v7a'
-    compileSdk 34
+    compileSdk rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdk 24
+        minSdk rootProject.ext.android.minSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
