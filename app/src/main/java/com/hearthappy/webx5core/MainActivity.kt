@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         viewBinding.apply {
             btnLoadWebView.setOnClickListener {
-                Toast.makeText(this@MainActivity, if (webView.getIsX5Core()) "X5内核: " + QbSdk.getTbsVersion(this@MainActivity) else "SDK系统内核", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, if (webView.getIsX5Core()) "当前是：X5内核: " + QbSdk.getTbsVersion(this@MainActivity) else "当前是：SDK系统内核", Toast.LENGTH_SHORT).show()
                 viewBinding.initWebView()
             }
             btnLoadWebView.requestFocus()
