@@ -6,7 +6,7 @@
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
             android:process=":dexopt"/>
-        <service android:name="com.hearthappy.x5core_armeabi_v7a.X5ProcessInitService" android:process=":web"
+        <service android:name="com.hearthappy.x5core_armeabi_v7a.com.hearthappy.x5core.X5ProcessInitService" android:process=":web"
             android:exported="false"/>
     </application>
 </manifest>
