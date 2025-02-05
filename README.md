@@ -30,7 +30,7 @@ X5CoreManager.initX5Core(baseContext,listener = object : X5CoreListener {
 
             override fun onInstallFinish(stateCode: Int) {
                 Log.d(TAG, "onInstallFinish: $stateCode")
-               //stateCode返回200则安装成功
+               //stateCode返回200则安装成功,需要重启app生效
             }
         })
 ```
