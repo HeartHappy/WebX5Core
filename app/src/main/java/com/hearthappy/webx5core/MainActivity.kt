@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.hearthappy.logs.LogTools
 import com.hearthappy.webx5core.databinding.ActivityMainBinding
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.WebSettings
@@ -30,9 +29,6 @@ class MainActivity : AppCompatActivity() {
         viewBinding.apply {
             btnLoadWebView.setOnClickListener {
                 Toast.makeText(this@MainActivity, if (webView.getIsX5Core()) "当前是：X5内核: " + QbSdk.getTbsVersion(this@MainActivity) else "当前是：SDK系统内核", Toast.LENGTH_SHORT).show()
-                LogTools.common.t(TAG).d("test logging")
-                LogTools.common.t(TAG).d("test logging1")
-                LogTools.common.t(TAG).d("test logging2")
                 viewBinding.initWebView()
             }
             btnLoadWebView.requestFocus()

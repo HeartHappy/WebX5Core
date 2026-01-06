@@ -44,7 +44,6 @@ dependencies {
     implementation rootProject.ext.dependencies.activity_ktx
 //    implementation project(':x5core_arm64_v8a')
 //    implementation project(':x5core_armeabi_v7a')
-    implementation 'com.github.HeartHappy:LogTools:1.0.1'
     implementation 'com.github.HeartHappy.webX5Core:webx5core_arm64_v8a:1.0.2'
 //    implementation 'com.github.HeartHappy.webX5Core:webx5core_armeabi_v7a:1.0.2'
     testImplementation rootProject.ext.dependencies.junit
